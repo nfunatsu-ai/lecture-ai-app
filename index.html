@@ -1,25 +1,67 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>My Page</title>
+  <title>講義音声ノートAI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-  body {
-    font-family: Arial;
-    text-align: center;
-  }
-</style>
-  
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+    }
+    button {
+      margin: 5px;
+    }
+  </style>
 </head>
-<body>
-  <h1>Lecture AI App</h1>
-  <p>このアプリは講義内容を要約するためのものです。</p>
 
-  <br>
-  <a href="about.html">About</a>
+<body>
+  <h1>講義音声ノートAI</h1>
+
+  <!-- APIキー -->
+  <h3>APIキー</h3>
+  <input type="password" id="apiKey" placeholder="APIキーを入力">
+  <button onclick="saveApiKey()">保存</button>
+
+  <br><br>
+
+  <!-- 音声 -->
+  <h3>音声ファイル</h3>
+  <input type="file" id="audioFile" accept="audio/*">
+
+  <br><br>
+
+  <!-- 実行 -->
+  <button onclick="analyzeAudio()">解析する</button>
+
+  <p id="loading" style="display:none;">解析中です…</p>
+
+  <hr>
+
+  <!-- 文字起こし -->
+  <h3>文字起こし</h3>
+  <p id="transcript"></p>
+  <button onclick="copyText('transcript')">コピー</button>
+  <button onclick="downloadText('transcript','transcript.txt')">ダウンロード</button>
+
+  <hr>
+
+  <!-- 要約 -->
+  <h3>要約</h3>
+  <p id="summary"></p>
+  <button onclick="copyText('summary')">コピー</button>
+  <button onclick="downloadText('summary','summary.txt')">ダウンロード</button>
+
+  <hr>
+
+  <!-- 要点 -->
+  <h3>要点</h3>
+  <p id="keypoints"></p>
+  <button onclick="copyText('keypoints')">コピー</button>
+  <button onclick="downloadText('keypoints','keypoints.txt')">ダウンロード</button>
 
   <script src="script.js"></script>
 </body>
 </html>
-
