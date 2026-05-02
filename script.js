@@ -17,6 +17,18 @@ async function analyzeAudio() {
   const fileInput = document.getElementById("audioFile");
   const file = fileInput.files[0];
 
+  if (!file) {
+    alert("音声ファイルを選択してください");
+    return;
+  }
+
+  const maxSize = 10 * 1024 * 1024; // 10MB
+
+  if (file.size > maxSize) {
+    alert("ファイルサイズが大きすぎます（10MB以下にしてください）");
+    return;
+  }
+
   if (!apiKey) {
     alert("APIキーを入力してください");
     return;
@@ -74,6 +86,11 @@ async function analyzeAudio() {
         }
       );
 
+      if (!response.ok) {
+        alert("通信エラーが発生しました（ステータス: " + response.status + "）");
+         return;
+      }
+      
       const data = await response.json();
       console.log(data);
 
@@ -95,9 +112,14 @@ async function analyzeAudio() {
            
 
     } catch (error) {
-      console.error(error);
-      alert("エラー発生");
-    }
+        console.error(error);
+
+        if (error.name === "TypeError") {
+           alert("ネットワークエラーが発生しました（通信環境を確認してください）");
+        } else {
+          alert("予期しないエラーが発生しました");
+        }
+      }
   };
 
   reader.readAsDataURL(file);
@@ -132,4 +154,3 @@ function downloadText(id, filename) {
 
   URL.revokeObjectURL(link.href);
 }
-
